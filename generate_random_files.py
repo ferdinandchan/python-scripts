@@ -204,7 +204,9 @@ def main():
     
     """
     
-    Mini quiz -> can you try figure out what the below logic does and write a short comment? :) 
+    !!!! Mini quiz !!!!
+    
+    -> can you try figure out what the below logic does and write a short comment? :) 
     """
     total_size = 0
     for i in range(1, num_files + 1):
