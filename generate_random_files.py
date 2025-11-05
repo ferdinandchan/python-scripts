@@ -124,18 +124,39 @@ def create_random_file(folder_path, file_index, max_size_kb):
 
 """
 This is the entry point of this python script!
-If you want to trace the logic, this is where you should start
+If you want to trace the logic of this script, this is where you should start
 """
 def main():
+
+    """
+    This script start by making sure user have provided all necessary arguments.
+    Arguments are like options or settings that the user can use to modify the behavior of this script.
+    For this script we expect three arguments
+
+    - folder_path
+    - num_files
+    - max_size_kb
+
+    All arguments are mandatory and the script will quit if any is missing
+    """
+    
     # Check arguments
+    # sys.argv contains the arguments that user pass when they call this script via 'python3'
+    # The first argument will be the name of the script
     if len(sys.argv) != 4:
-        print("Usage: python generate_random_files.py <folder_path> <num_files> <max_size_kb>")
+        print("Usage: python3 generate_random_files.py <folder_path> <num_files> <max_size_kb>")
         print("\nArguments:")
         print("  folder_path: Directory where files will be created")
         print("  num_files: Number of files to generate")
         print("  max_size_kb: Maximum size of each file in kilobytes")
         sys.exit(1)
     
+    # After we count that we have received 3 arguments, we continue to check their "type"
+    # folder_path must be a valid path, it should be in the format of "/xxxx"
+    # num_files must be an integer
+    # max_size_kb must be an integer
+    #
+    # This script will quit if any argument does not match its type
     try:
         folder_path = Path(sys.argv[1])
         num_files = int(sys.argv[2])
@@ -145,6 +166,8 @@ def main():
         sys.exit(1)
     
     # Validate arguments
+    #
+    # We also want to make sure the value of the int argument make sense, i.e. they must be non-negative 
     if num_files <= 0:
         print("Error: num_files must be positive")
         sys.exit(1)
@@ -153,18 +176,36 @@ def main():
         print("Error: max_size_kb must be positive")
         sys.exit(1)
     
+    """
+    
+    After we validate and make sure we have all valid arguments. 
+    We start to do the real work.
+
+    First is to make sure the "target folder" exists, if it doesn't we will try to create it
+    """
     # Create folder if it doesn't exist
     try:
-        folder_path.mkdir(parents=True, exist_ok=True)
+        folder_path.mkdir(parents=True, exist_ok=True) # mkdir will create the folder if it does not exists
     except Exception as e:
         print(f"Error creating folder {folder_path}: {e}")
         sys.exit(1)
     
+    """
+    
+    Once we have the destination folder, we start to create file that contain randomly generated content
+    
+    It is a good practice to always give the user informed about what we are doing by printing out some messages like below
+    """
     # Generate files
     print(f"Generating {num_files} random text files in '{folder_path}'...")
     print(f"Maximum file size: {max_size_kb} KB")
     print("-" * 50)
     
+    
+    """
+    
+    Mini quiz -> can you try figure out what the below logic does and write a short comment? :) 
+    """
     total_size = 0
     for i in range(1, num_files + 1):
         try:
